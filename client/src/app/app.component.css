@@ -1,0 +1,13 @@
+*{
+    font-family: 'Heebo', sans-serif;
+    
+}
+.site{
+    height: 100%; 
+    position: fixed;
+     width: 100%;
+    background-size: cover;
+    margin: 0; 
+    overflow: auto;
+    background-image: url("https://ydsgroceries.com/pub/media/wysiwyg/groceriesmainbanner.jpg");
+}

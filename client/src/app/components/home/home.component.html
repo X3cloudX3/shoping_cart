@@ -1,0 +1,14 @@
+<div class="header">
+    <div *ngIf="guest">
+        <div style="text-align: left;">
+            <button [ngClass]="{'checkedbtn': pageToShow == 'Login'}" (click)="showLoginPage()"
+                class="btn">Login</button>
+            <button [ngClass]="{'checkedbtn': pageToShow == 'Register' || pageToShow == 'Register2'}"
+                (click)="showRegisterOnePage()" class="btn">Register</button>
+        </div>
+        <app-sign-in *ngIf="pageToShow == 'Login'"></app-sign-in>
+        <app-sign-up (handlePages)="showRegisterTwoPage()" *ngIf="pageToShow == 'Register'"></app-sign-up>
+        <app-sign-up-part-two (handlePages)="showRegisterOnePage()" (registerSuccessfully)="showLoginPage()"
+            *ngIf="pageToShow == 'Register2'"></app-sign-up-part-two>
+    </div>
+</div>

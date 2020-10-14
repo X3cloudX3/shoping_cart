@@ -1,0 +1,11 @@
+.products-main-div{
+    background:rgba(0, 0, 0, 0.692);
+    height:100%;
+    margin-top:20px;
+    text-align:center;
+}
+
+.products-categories{
+    display: flex;
+    flex-wrap: wrap;
+}

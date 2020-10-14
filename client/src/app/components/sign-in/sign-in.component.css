@@ -1,0 +1,21 @@
+.signBorder{
+    height: 500px;
+    width: 450px;
+    top: 0px;
+    position: relative;
+    -webkit-box-shadow: 10px 13px 36px 4px rgba(0,0,0,0.75);
+    -moz-box-shadow: 10px 13px 36px 4px rgba(0,0,0,0.75);
+    box-shadow: 10px 13px 36px 4px rgba(0,0,0,0.75);
+    text-align: center;
+    right: -400px;
+    padding: 3%;
+    background: rgb(247 107 21);
+    color: black;
+}
+.sign-in-button{
+    width: 100%;
+    background: #ad5389;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(360deg,#00537E 10%,#3AA17E 360%);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(360deg,#00537E 10%,#3AA17E 360%); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    color: black;
+    }

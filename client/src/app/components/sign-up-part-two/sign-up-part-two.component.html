@@ -1,0 +1,37 @@
+<div>
+    <div [formGroup]="registerStepTwo" class="signBorder">
+        <h2>Sign Up</h2>
+        <div class="container">
+            <h5>Personal Details</h5>
+            <div class="two-inputs">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">First Name</label>
+                    <input formControlName="firstName" type="text" class="form-control" id="firstName"
+                        aria-describedby="emailHelp">
+                    <span>{{errors.firstNameError}}</span>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Last Name</label>
+                    <input formControlName="lastName" type="text" class="form-control" id="lastName"
+                        aria-describedby="emailHelp">
+                    <span>{{errors.lastNameError}}</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">City</label>
+                <input formControlName="city" type="text" class="form-control" id="city">
+                <span>{{errors.cityError}}</span>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Street</label>
+                <input formControlName="street" type="text" class="form-control" id="street">
+                <span>{{errors.streetError}}</span>
+            </div>
+            <span style="color:green">{{successMessage}}</span>
+            <br>
+            <button type="button" (click)="moveBack()" class="sign-up-button btn">Back</button>
+            <button [disabled]="nextButtonError" type="button" (click)="signUp()" class="sign-up-button btn">Sign
+                Up</button>
+        </div>
+    </div>
+</div>

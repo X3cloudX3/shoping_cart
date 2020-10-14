@@ -1,0 +1,30 @@
+<nav class="nav-background-color navbar navbar-expand-lg ">
+    <span class="navbar-brand" href="#">Quick Stop</span>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li *ngFor="let route of routes"><a
+                    *ngIf="route.isVisible && route.role === role || route.isVisible && route.role === 'guest'"
+                    routerLink="{{prefix}}{{route.path}}">{{route.title}}</a>
+            </li>
+        </ul>
+        <div *ngIf="role !== 'guest'" class="shoppingbasket">
+            <!-- <div class="top"></div>
+            <div class="bottom"></div>
+            <div class="left"></div>
+            <div class="right"></div>
+            <div class="basketitems">{{cartSize}}</div> -->
+            <button class="btn btn-danger btn-sm"><i class="fa fa-cart-arrow-down"
+                    aria-hidden="true">{{cartSize}}</i></button>
+        </div>
+
+        <span *ngIf="role !== 'guest'" style="margin: 5px; font-size: 20px;">|</span>
+        <span style="text-transform: capitalize;margin: 5px;">Hello {{username}}</span>
+        <span *ngIf="role !== 'guest'" style="margin: 5px; font-size: 20px;">|</span>
+        <button *ngIf="role !== 'guest'" class="sign-out-button btn btn-dark" (click)="signOut()">Sign Out</button>
+    </div>
+
+</nav>
