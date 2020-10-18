@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ProductsService } from 'src/app/services/products/products.service';
 
 @Component({
-  selector: 'app-products-list',
-  templateUrl: './products-list.component.html',
-  styleUrls: ['./products-list.component.css']
+  selector: 'app-admin-products-list',
+  templateUrl: './admin-products-list.component.html',
+  styleUrls: ['./admin-products-list.component.css']
 })
-export class ProductsListComponent implements OnInit {
+export class AdminProductsListComponent implements OnInit {
   public products
   public selectedCategory
   constructor(public productsService: ProductsService) {

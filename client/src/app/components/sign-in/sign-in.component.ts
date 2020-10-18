@@ -33,7 +33,11 @@ export class SignInComponent implements OnInit {
       if (res.token) {
         this.userService.setUserDetails(res)
         this.userService.setName(res.name)
-        this.router.navigate(["/products"])
+        if (res.role === 'admin') {
+          this.router.navigate(["/admin/products"])
+        } else {
+          this.router.navigate(["/products"])
+        }
       }
     })
   }

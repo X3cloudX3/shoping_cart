@@ -2,13 +2,16 @@ const express = require("express")
 const router = express.Router();
 const jwt = require("jsonwebtoken")
 const { handleRegister, handleLogin, isUserExist } = require('../database/controllers/userController')
+const { checkPassword } = require('../utils/users')
 
 
 
 router.post("/register", async (req, res, next) => {
     try {
+
         const { email, password } = req.body
         const user = await isUserExist(email, password);
+        console.log('first', user);
         if (user) return res.json({ message: "user already exists" })
         const result = await handleRegister(req.body)
         res.json({ result, message: "user has registerd successfully" })
@@ -21,10 +24,11 @@ router.post("/register", async (req, res, next) => {
 
 router.post("/login", async (req, res, next) => {
     try {
-
         const { email, password } = req.body
         const user = await isUserExist(email, password);
         if (!user) return res.status(401).send("ERROR LOGIN");
+        // const confirmPassword = await checkPassword(password)
+        // if (!confirmPassword) return res.status(401).send("ERROR LOGIN");
         const { token, name, fullName, role } = await handleLogin(email)
         return res.json({ token, name, fullName, role, message: 'logged in successfull' })
 

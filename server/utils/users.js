@@ -22,6 +22,7 @@ async function getUser(email) {
 async function checkPassword(password, userPassword) {
     try {
         const compare = await bcrypt.compare(password, userPassword)
+        console.log(compare);
         if (compare) {
             return true
         } else {

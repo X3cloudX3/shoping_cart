@@ -13,9 +13,11 @@ import { SignUpPartTwoComponent } from './components/sign-up-part-two/sign-up-pa
 import { HomeComponent } from './components/home/home.component';
 import { ProductItemComponent } from './components/products/product-item/product-item.component';
 import { ProductsListComponent } from './components/products/products-list/products-list.component';
+import { AdminProductItemComponent } from './components/products/admin-product-item/admin-product-item.component';
+import { AdminProductsListComponent } from './components/products/admin-products-list/admin-products-list.component';
 import { MatIconModule } from '@angular/material/icon'
 import { MatButtonModule } from '@angular/material/button';
-import {MatBadgeModule} from '@angular/material/badge';
+import { MatBadgeModule } from '@angular/material/badge';
 
 @NgModule({
   declarations: [
@@ -27,6 +29,9 @@ import {MatBadgeModule} from '@angular/material/badge';
     HomeComponent,
     ProductsListComponent,
     ProductItemComponent,
+    AdminProductItemComponent,
+    AdminProductsListComponent,
+
 
 
   ],

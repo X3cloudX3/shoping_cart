@@ -37,7 +37,7 @@ export class UserService {
   }
   setUserDetails(details) {
     this.subject.next(details)
-  }
+  } 
 
 
   signUp(): Observable<any> {

@@ -14,18 +14,20 @@ async function saveProduct(product) {
 
 async function editProduct(product) {
     const { id, name, category, price, imageURL } = product;
-    try {
-        const productToEdit = await ProductModel.updateOne({ "_id": id }, { $set: { "name": name, "category": category, "price": price, "imageURL": imageURL } });
-        if (productToEdit) {
-            res.status(201).json({ message: `Product "${name}" was changed successfully.` });
-        } else {
-            res.status(400).json({ message: ` We have an error .` });
-        }
-    } catch (err) {
-        console.log(err.message);
-        res.status(400).json({ message: ` We have an error with data : ${err.message}` });
-    }
+    // try {
+    //     const productToEdit = await ProductModel.updateOne({ "_id": id }, { $set: { "name": name, "category": category, "price": price, "imageURL": imageURL } });
+    //     if (productToEdit) {
+    //         res.status(201).json({ message: `Product "${name}" was changed successfully.` });
+    //     } else {
+    //         res.status(400).json({ message: ` We have an error .` });
+    //     }
+    // } catch (err) {
+    //     console.log(err.message);
+    //     res.status(400).json({ message: ` We have an error with data : ${err.message}` });
+    // }
+    console.log(product);
 }
+
 
 module.exports = {
     saveProduct,

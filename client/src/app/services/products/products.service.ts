@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http"
 import { Observable } from 'rxjs';
 
-const baseUrl = "http://localhost:4000/products/"
+const baseUrl = "http://localhost:4000"
 
 @Injectable({
   providedIn: 'root'
@@ -14,18 +14,18 @@ export class ProductsService {
 
   getProducts(): Observable<any> {
 
-    return this.http.get(`${baseUrl}getProducts`)
+    return this.http.get(`${baseUrl}/products/getProducts`)
 
   }
 
-  editProducts(): Observable<any> {
+  editProducts(product: object): Observable<any> {
 
-    return this.http.get(`${baseUrl}editProducts`)
-
+    return this.http.post(`${baseUrl}/products/editProduct`, { product })
   }
+
   addProducts(): Observable<any> {
 
-    return this.http.get(`${baseUrl}addProducts`)
+    return this.http.get(`${baseUrl}/products/addProducts`)
 
   }
 
