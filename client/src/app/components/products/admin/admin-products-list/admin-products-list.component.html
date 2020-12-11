@@ -1,0 +1,9 @@
+<div class="products-main-div">
+    <div>
+        <addProduct-modal-basic (addProductStatusUpdate)="onAddSave($event)"></addProduct-modal-basic>
+    </div>
+    <div class="products-categories">
+        <app-admin-product-item (passtoParent)="onChanged($event)" *ngFor="let product of products" [product]="product">
+        </app-admin-product-item>
+    </div>
+</div>

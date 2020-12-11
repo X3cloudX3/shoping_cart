@@ -1,13 +1,13 @@
 .flip-card{
-  width: 300px;
-  height: 250px;
+  width: 350px;
+  height: 300px;
   margin: auto;
   margin-top: 20px;
 }
 img {
   border-radius: 8%;
-  width: 250PX;
-  height: 150PX;
+  width: 300PX;
+  height: 250PX;
 }
 .flip-card-back{
   background-color: #4b423f;

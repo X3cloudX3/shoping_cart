@@ -13,10 +13,23 @@ export class AdminProductsListComponent implements OnInit {
     this.products = []
   }
 
+
   ngOnInit() {
+    this.getData()
+  }
+
+  getData() {
     this.productsService.getProducts().subscribe((res) => {
       this.products = res.result
     })
   }
+  onAddSave(save: string) {
+    save === 'product saved' ? this.getData() : alert('product was not saved')
+  }
 
+  onChanged(changed: string) {
+    if (changed === 'product was edited') {
+      this.getData()
+    }
+  }
 }

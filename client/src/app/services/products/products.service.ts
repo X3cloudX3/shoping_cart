@@ -23,9 +23,9 @@ export class ProductsService {
     return this.http.post(`${baseUrl}/products/editProduct`, { product })
   }
 
-  addProducts(): Observable<any> {
+  addProducts(imageURL: string, name: string, category: string, price: number): Observable<any> {
 
-    return this.http.get(`${baseUrl}/products/addProducts`)
+    return this.http.post(`${baseUrl}/products/addProduct`, { imageURL, name, category, price })
 
   }
 

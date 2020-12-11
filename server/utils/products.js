@@ -1,7 +1,8 @@
 const ProductModel = require("../database/models/productSchema")
+const ObjectID = require('mongodb').ObjectID;
 
 async function saveProduct(product) {
-    const newProduct = new productModel({ ...product })
+    const newProduct = new ProductModel({ ...product })
     try {
         const dbRes = await newProduct.save();
         return dbRes;
@@ -12,20 +13,24 @@ async function saveProduct(product) {
     }
 }
 
-async function editProduct(product) {
-    const { id, name, category, price, imageURL } = product;
-    // try {
-    //     const productToEdit = await ProductModel.updateOne({ "_id": id }, { $set: { "name": name, "category": category, "price": price, "imageURL": imageURL } });
-    //     if (productToEdit) {
-    //         res.status(201).json({ message: `Product "${name}" was changed successfully.` });
-    //     } else {
-    //         res.status(400).json({ message: ` We have an error .` });
-    //     }
-    // } catch (err) {
-    //     console.log(err.message);
-    //     res.status(400).json({ message: ` We have an error with data : ${err.message}` });
-    // }
-    console.log(product);
+async function editProduct(productNG) {
+    const { product } = productNG;
+    try {
+        const productToEdit = await ProductModel.updateOne({ _id: ObjectID(product.id) }, { $set: { name: product.name, category: product.category, price: product.price, imageURL: product.imageURL }, },
+            function (err, user) {
+                if (err) return console.log(err);
+            })
+        if (productToEdit) {
+            return true
+        } else {
+            return false
+        }
+    } catch (err) {
+        console.log(err.message);
+        return false
+
+    }
+
 }
 
 

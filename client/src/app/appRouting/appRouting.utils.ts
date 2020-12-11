@@ -2,7 +2,7 @@ import { Route } from "@angular/router"
 import { HomeComponent } from '../components/home/home.component'
 import { AuthService } from "../services/authGuard/auth.service"
 import { ProductsListComponent } from '../components/products/products-list/products-list.component'
-import { AdminProductsListComponent } from '../components/products/admin-products-list/admin-products-list.component'
+import { AdminProductsListComponent } from '../components/products/admin/admin-products-list/admin-products-list.component'
 interface CustomRoute extends Route {
     children?: Array<CustomRoute>;
     title?: string;
