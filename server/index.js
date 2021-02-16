@@ -9,6 +9,8 @@ const productRouts = require("./routes/products")
 const userRouts = require("./routes/users")
 const cors = require("cors");
 const validateToken = require("./validations/validateToken")
+const cartRouts = require("./routes/cart")
+
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(cors());
@@ -17,6 +19,7 @@ dbConnection();
 app.use("/users", userRouts)
 app.use(validateToken)
 app.use("/products", productRouts)
+app.use("/cart", cartRouts)
 
 server.listen(process.env.PORT, () => {
     console.log(`listening to ${process.env.PORT}`);

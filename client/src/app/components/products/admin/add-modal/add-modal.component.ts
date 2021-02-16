@@ -11,10 +11,11 @@ export class AddModalComponent {
   @Output() addProductStatusUpdate = new EventEmitter<string>();
   @Input() product
   checkoutForm;
-  imageURL
-  name
-  category
-  price
+  imageURL: string
+  name: string
+  category: string
+  price: number
+  errors: any
   ngOnInit() {
     this.initForm();
   }
@@ -23,7 +24,7 @@ export class AddModalComponent {
     this.imageURL = ""
     this.name = ""
     this.category = ""
-    this.price = ""
+    this.price = 0
   }
 
   closeResult = '';
@@ -31,7 +32,14 @@ export class AddModalComponent {
 
   constructor(private modalService: NgbModal,
     private formBuilder: FormBuilder,
-    public productService: ProductsService) { }
+    public productService: ProductsService) {
+    this.errors = {
+      imageError: "",
+      nameError: "",
+      categoryError: "",
+      priceError: "",
+    }
+  }
 
   open(content) {
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
@@ -57,6 +65,9 @@ export class AddModalComponent {
     this.modalService.dismissAll()
   }
 
+ 
+
+ 
   displayOptions(displayDevice) {
 
   }

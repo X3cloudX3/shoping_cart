@@ -20,7 +20,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatBadgeModule } from '@angular/material/badge';
 import { EditModalComponent } from './components/products/admin/edit-modal/edit-modal.component';
 import { AddModalComponent } from './components/products/admin/add-modal/add-modal.component';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,10 +34,7 @@ import { AddModalComponent } from './components/products/admin/add-modal/add-mod
     AdminProductItemComponent,
     AdminProductsListComponent,
     EditModalComponent,
-    AddModalComponent
-
-
-
+    AddModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -48,7 +45,9 @@ import { AddModalComponent } from './components/products/admin/add-modal/add-mod
     NgbModule,
     MatIconModule,
     MatButtonModule,
-    MatBadgeModule
+    MatBadgeModule,
+    BrowserAnimationsModule,
+
   ],
   providers: [{ useClass: CustomInterceptorService, provide: HTTP_INTERCEPTORS, multi: true }],
   bootstrap: [AppComponent]

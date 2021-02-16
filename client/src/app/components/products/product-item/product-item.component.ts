@@ -1,4 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { CartService } from 'src/app/services/cart/cart.service';
+import { ProductsService } from 'src/app/services/products/products.service';
+import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
   selector: 'app-product-item',
@@ -6,11 +9,19 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./product-item.component.css']
 })
 export class ProductItemComponent implements OnInit {
-
-  constructor() { }
+  amount: number
+  userID: number
+  cart: Array<any>
+  constructor(public cartService: CartService, public productsService: ProductsService) { }
   @Input() product
   ngOnInit() {
-    console.log(this.product)
+    this.amount = 1
   }
 
+  addToCart(product: any, amount: number) {
+    const { category, imageURL, name, price } = product
+    const priceWithAmount = Math.round(price * amount)
+    this.cartService.addToCart(category, imageURL, name, price, priceWithAmount, amount).subscribe()
+    this.amount = 1
+  }
 }

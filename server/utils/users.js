@@ -22,7 +22,6 @@ async function getUser(email) {
 async function checkPassword(password, userPassword) {
     try {
         const compare = await bcrypt.compare(password, userPassword)
-        console.log(compare);
         if (compare) {
             return true
         } else {
@@ -33,9 +32,9 @@ async function checkPassword(password, userPassword) {
     }
 }
 
-async function getToken({ email, id, role, firstName, lastName }) {
+async function getToken({ email, _id, id, role, firstName, lastName }) {
     const { SECRET } = process.env
-    const token = jwt.sign({ email, id, role, firstName, lastName }, SECRET, { expiresIn: "1h" })
+    const token = jwt.sign({ email, _id, id, role, firstName, lastName }, SECRET, { expiresIn: "1h" })
     return token
 }
 

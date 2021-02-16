@@ -2,22 +2,21 @@ const express = require("express")
 const router = express.Router();
 const jwt = require("jsonwebtoken")
 const { handleRegister, handleLogin, isUserExist } = require('../database/controllers/userController')
-const { checkPassword } = require('../utils/users')
+
 
 
 
 router.post("/register", async (req, res, next) => {
     try {
-
-        const { email, password } = req.body
-        const user = await isUserExist(email, password);
-        console.log('first', user);
-        if (user) return res.json({ message: "user already exists" })
         const result = await handleRegister(req.body)
         res.json({ result, message: "user has registerd successfully" })
     }
     catch (err) {
-        res.json(err.message)
+        const { message } = err
+        console.log(err);
+        res.json({ message: message })
+        throw new Error(message)
+
     }
 })
 
@@ -27,8 +26,6 @@ router.post("/login", async (req, res, next) => {
         const { email, password } = req.body
         const user = await isUserExist(email, password);
         if (!user) return res.status(401).send("ERROR LOGIN");
-        // const confirmPassword = await checkPassword(password)
-        // if (!confirmPassword) return res.status(401).send("ERROR LOGIN");
         const { token, name, fullName, role } = await handleLogin(email)
         return res.json({ token, name, fullName, role, message: 'logged in successfull' })
 
@@ -44,7 +41,7 @@ router.post("/login", async (req, res, next) => {
 router.get('/getUserDetails', (req, res, next) => {
     const { autorization } = req.headers
     if (!autorization) {
-        res.json({ status: false })
+        res.json({ status: false, message: `sorry ${req.headers} you need a token` })
     }
     else {
         jwt.verify(autorization, process.env.SECRET, (err, decoded) => {

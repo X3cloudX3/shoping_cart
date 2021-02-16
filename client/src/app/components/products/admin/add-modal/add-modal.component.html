@@ -9,25 +9,25 @@
         <div class="form-group">
             <label for="exampleInputEmail1">imageURL</label>
             <input [(ngModel)]="imageURL" type="text" class="form-control" id="form1" placeholder="imageURL">
+            <span>{{errors.imageError}}</span>
         </div>
         <div class="form-group">
             <label for="exampleInputEmail1">name</label>
             <input [(ngModel)]="name" type="text" class="form-control" id="form1" placeholder="name">
+            <span>{{errors.nameError}}</span>
         </div>
         <div class="form-group">
             <label for="exampleInputEmail1">category</label>
             <input [(ngModel)]="category" type="text" class="form-control" id="form1" placeholder="category">
+            <span>{{errors.categoryError}}</span>
         </div>
         <div class="form-group">
             <label for="exampleInputEmail1">price in ils</label>
             <input [(ngModel)]="price" type="text" class="form-control" id="form1" placeholder="price in ils">
+            <span>{{errors.priceError}}</span>
         </div>
         <button type="button" class="btn btn-block btn-outline-dark" (click)=" addProduct()">Save</button>
     </div>
 </ng-template>
 
 <button class="btn btn-block btn-outline-success" (click)="open(content)">add product</button>
-
-<hr>
-
-<pre>{{ closeResult }}</pre>

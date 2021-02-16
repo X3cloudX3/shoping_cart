@@ -10,7 +10,12 @@
             <div class="back-footer">
                 <h5>{{product.name}}</h5>
                 <h5>{{product.category}}</h5>
-                <button class="btn btn-danger">{{product.price}}$ Add to cart</button>
+                <div style="margin:2%">
+                    <span>amount:<input [(ngModel)]="amount" type="number" style="opacity: 0.5; border-radius: 10%;"
+                            name="amount" min="1" max="100"></span>
+                </div>
+                <button (click)="addToCart(product,amount)" class="btn btn-danger">{{product.price*amount}}₪ Add to
+                    cart</button>
             </div>
         </div>
     </div>

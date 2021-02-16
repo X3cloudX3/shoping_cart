@@ -11,11 +11,9 @@
                     routerLink="{{prefix}}{{route.path}}">{{route.title}}</a>
             </li>
         </ul>
-        <div *ngIf="role !== 'guest'" class="shoppingbasket">
-            <button class="btn btn-danger btn-sm"><i class="fa fa-cart-arrow-down"
-                    aria-hidden="true">{{cartSize}}</i></button>
+        <div *ngIf="role !== 'admin' && role !== 'guest'" class="shoppingbasket">
+            <cart-modal-basic></cart-modal-basic>
         </div>
-
         <span *ngIf="role !== 'guest'" style="margin: 5px; font-size: 20px;">|</span>
         <span style="text-transform: capitalize;margin: 5px;">Hello {{username}}</span>
         <span *ngIf="role !== 'guest'" style="margin: 5px; font-size: 20px;">|</span>

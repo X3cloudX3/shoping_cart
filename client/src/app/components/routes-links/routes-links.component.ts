@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { UserService } from 'src/app/services/user/user.service';
 import { Router } from '@angular/router';
+import { CartService } from 'src/app/services/cart/cart.service';
 
 
 @Component({
@@ -14,7 +15,7 @@ export class RoutesLinksComponent implements OnInit {
   public username: String
   public cartSize: Number
   public role: String
-  constructor(public userService: UserService, public router: Router) {
+  constructor(public userService: UserService,public cartService:CartService, public router: Router) {
     this.username = "Guest"
     this.cartSize = 100
     this.role = "guest"

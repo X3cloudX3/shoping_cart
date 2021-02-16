@@ -11,8 +11,8 @@ module.exports = ((req, res, next) => {
                 return res.json({ status: false })
             }
             else {
-                const { id, role } = decoded
-                req.headers.user = { id, role }
+                const { _id, id, role } = decoded
+                req.headers.user = { _id, id, role }
                 next()
             }
         })

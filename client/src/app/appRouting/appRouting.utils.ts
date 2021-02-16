@@ -13,6 +13,19 @@ interface CustomRoute extends Route {
 export const routes: Array<CustomRoute> = [
     { path: "", redirectTo: "home", pathMatch: "full" },
     { path: "products", component: ProductsListComponent, title: "Products", isVisible: true, role: "customer", canActivate: [AuthService] },
-    { path: "admin/products", component: AdminProductsListComponent, title: "Admin Products", isVisible: true, role: "admin", canActivate: [AuthService] },
-    { path: "home", component: HomeComponent, title: "Home", isVisible: true, role: "guest" }
+    { path: "admin/products", component: AdminProductsListComponent, title: "Products", isVisible: true, role: "admin", canActivate: [AuthService] },
+    { path: "home", component: HomeComponent, title: "Home", isVisible: false, role: "guest" }
 ]
+
+
+
+
+
+
+
+
+
+
+
+
+

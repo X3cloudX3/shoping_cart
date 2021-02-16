@@ -21,7 +21,7 @@ export class SignUpPartTwoComponent implements OnInit {
       lastNameError: "",
       cityError: "",
       streetError: ""
-    }
+    } 
     this.successMessage = ""
     this.nextButtonError = true
     this.registerStepTwo = this.fb.group({

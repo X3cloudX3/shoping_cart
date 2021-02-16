@@ -37,10 +37,12 @@ export class UserService {
   }
   setUserDetails(details) {
     this.subject.next(details)
-  } 
+  }
 
 
   signUp(): Observable<any> {
+    console.log('part one', this.userPartOneDetails);
+    console.log('part two', this.userPartTwoDetails);
     return this.http.post(`${baseURL}/users/register`, { ...this.userPartOneDetails, ...this.userPartTwoDetails })
   }
   signIn(email: string, password: string): Observable<any> {
