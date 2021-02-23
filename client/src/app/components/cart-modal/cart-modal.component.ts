@@ -3,6 +3,7 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder } from '@angular/forms';
 import { FormControl } from '@angular/forms';
 import { CartService } from 'src/app/services/cart/cart.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'cart-modal-basic',
   templateUrl: './cart-modal.component.html'
@@ -10,9 +11,11 @@ import { CartService } from 'src/app/services/cart/cart.service';
 export class CartModalComponent implements OnInit {
   @Output() getUpdateStatusChange = new EventEmitter<any>();
   @Input() product
-  checkoutForm;
-  cart
+  checkoutForm: any;
+  cart: any
   cartSize: number
+  amount: number
+  totalCost: number
   ngOnInit() {
     this.initForm();
     this.cartDetails()
@@ -21,6 +24,7 @@ export class CartModalComponent implements OnInit {
   initForm() {
     this.cart = []
     this.cartSize = 0
+    this.totalCost = 0
   }
 
   closeResult = '';
@@ -28,7 +32,7 @@ export class CartModalComponent implements OnInit {
 
 
   constructor(private modalService: NgbModal,
-    private formBuilder: FormBuilder, public cartService: CartService) { }
+    private formBuilder: FormBuilder, public cartService: CartService, public router: Router) { }
 
   open(content) {
     this.cartDetails()
@@ -41,11 +45,32 @@ export class CartModalComponent implements OnInit {
 
   cartDetails() {
     this.cartService.getCartDetails().subscribe(res => {
-      this.cart = res
+      this.cart = res;
+      this.totalCost = res.reduce((acc, item) => acc + item.priceWithAmount, 0)
       this.cartSize = this.cart.length
     })
   }
 
+  amountChanged(item) {
+    this.cartService.editFromCart(item).subscribe(res => {
+      this.cart = res.products
+      this.totalCost = res.products.reduce((acc, item) => acc + item.priceWithAmount, 0)
+      this.cartSize = res.products.length
+    })
+  }
+
+  deleteFromCart(item) {
+    this.cartService.deleteFromCart(item).subscribe(res => {
+      this.cart = res.products
+      this.totalCost = res.products.reduce((acc, item) => acc + item.priceWithAmount, 0)
+      this.cartSize = res.products.length
+    })
+  }
+  checkout() {
+
+    this.router.navigate(["/checkout"])
+    this.modalService.dismissAll()
+  }
   displayOptions(displayDevice) {
 
   }

@@ -9,6 +9,7 @@ const {
 async function isUserExist(userEmail, password) {
     try {
         const [result] = await getUser(userEmail);
+        console.log(result);
         const { PasswordHash } = result
         if (!result) throw new Error("user not found"); else {
             const comparePassword = await checkPassword(password, PasswordHash)
@@ -43,8 +44,9 @@ async function handleRegister(userDetails) {
 async function handleLogin(email) {
     try {
         const [user] = await getUser(email)
-        const { _id, id, role, firstName, lastName } = user
-        const token = await getToken({ email, _id, id, role, firstName, lastName })
+        const { _id, id, role, firstName, lastName, city, street } = user
+        console.log(user);
+        const token = await getToken({ email, _id, id, role, firstName, lastName, city, street })
         return { token, name: user.email, fullName: `${firstName} ${lastName}`, role }
     }
     catch {

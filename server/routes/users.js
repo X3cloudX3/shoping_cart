@@ -2,8 +2,8 @@ const express = require("express")
 const router = express.Router();
 const jwt = require("jsonwebtoken")
 const { handleRegister, handleLogin, isUserExist } = require('../database/controllers/userController')
-
-
+const { getUser, } = require('../utils/users')
+const moment = require('moment')
 
 
 router.post("/register", async (req, res, next) => {
@@ -49,30 +49,15 @@ router.get('/getUserDetails', (req, res, next) => {
                 return res.json({ status: false })
             }
             else {
-                const { id, role, firstName, lastName } = decoded
-
-                res.json({ id, role, fullName: `${firstName} ${lastName}` })
+                const todayDate = (moment().format("YYYY-MM-DD"));
+                const { id, role, firstName, lastName, city, street } = decoded
+                res.json({ id, role, fullName: `${firstName} ${lastName}`, city, street, todayDate })
             }
         })
     }
 })
 
-// router.get("/verify", async (req, res, next) => {
-//     try {
-//         setTimeout(() => {
-//             const { authorization } = req.heade
-//             jwt.verify(authorization, process.env.SECRET, (err, decoded) => {
-//                 if (err) return res.json({ status: false })
-//                 if (decoded.user_type === "admin") { return res.json({ status: true, admin: true, userId: decoded.id }) } else {
-//                     return res.json({ status: true, admin: false, userId: decoded.id })
-//                 }
-//             })
-//         }, 2000);
-//     } catch (ex) {
-//         return res.json({ status: false })
-//     }
 
-// })
 
 module.exports = router;
 

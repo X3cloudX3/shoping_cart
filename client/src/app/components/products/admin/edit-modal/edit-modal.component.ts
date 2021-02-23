@@ -16,7 +16,7 @@ export class EditModalComponent implements OnInit {
     this.initForm();
   }
 
-  initForm() {
+  initForm() { 
     this.checkoutForm = this.formBuilder.group({
       id: new FormControl(this.product._id),
       imageURL: new FormControl(this.product.imageURL),

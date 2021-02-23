@@ -21,6 +21,10 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { EditModalComponent } from './components/products/admin/edit-modal/edit-modal.component';
 import { AddModalComponent } from './components/products/admin/add-modal/add-modal.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CheckoutComponent } from './components/paymentCheckout/checkout/checkout.component';
+import { CartTableComponent } from './components/paymentCheckout/cart-table/cart-table.component';
+import { PaymentInfoComponent } from './components/paymentCheckout/payment-info/payment-info.component';
+import { HighlightSearchPipe } from './pipes/highlightSearchPipe/search-in-cart.pipe';
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,6 +39,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AdminProductsListComponent,
     EditModalComponent,
     AddModalComponent,
+    CheckoutComponent,
+    CartTableComponent,
+    PaymentInfoComponent,
+    HighlightSearchPipe,
   ],
   imports: [
     BrowserModule,
@@ -47,6 +55,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatButtonModule,
     MatBadgeModule,
     BrowserAnimationsModule,
+
 
   ],
   providers: [{ useClass: CustomInterceptorService, provide: HTTP_INTERCEPTORS, multi: true }],

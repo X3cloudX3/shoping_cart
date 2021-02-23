@@ -16,6 +16,12 @@ export class CartService {
   getCartDetails(): Observable<any> {
     return this.http.get(`${baseUrl}/cart/getCartDetails`)
   }
+  deleteFromCart(item): Observable<any> {
+    return this.http.post(`${baseUrl}/cart/deleteFromCart`, { item })
+  }
+  editFromCart(item): Observable<any> {
+    return this.http.post(`${baseUrl}/cart/editItemFromCart`, { item })
+  }
 }
 
 

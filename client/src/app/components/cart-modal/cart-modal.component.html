@@ -42,25 +42,30 @@
             <td></td>
             <td>{{item.price}}₪</td>
             <td>
-              <input type="number" value="{{item.amount}}" aria-label="Search" class="form-control"
-                style="width: 100px">
+              <div class="form-group">
+                <input (change)="amountChanged(item)" min="1" max="99" [(ngModel)]="item.amount" type="number"
+                  value="{{item.amount}}" aria-label="Search" class="form-control" style="width: 100px">
+              </div>
             </td>
             <td class="font-weight-bold">
               <strong>{{item.priceWithAmount}}₪</strong>
             </td>
             <td>
-              <button type="button" color="primary" size="sm" data-toggle="tooltip" data-placement="top"
-                title="Remove item">X
+              <button (click)="deleteFromCart(item)" type="button" color="primary" size="sm" data-toggle="tooltip"
+                data-placement="top" title="Remove item">X
               </button>
             </td>
+          </tr>
+          <tr style="font-size: 30px; ">
+            <strong>total: {{totalCost}}₪</strong>
           </tr>
         </tbody>
       </table>
     </div>
+    <button [disabled]="cartSize<=0" (click)="checkout(cart)" class="btn btn-block btn-primary">go to checkout</button>
   </div>
 </ng-template>
 
-<button class="btn btn-sm btn-success" (click)="open(content)"><i class="fa fa-cart-arrow-down"
+<button [disabled]="cartSize<=0" class="btn btn-sm btn-success" (click)="open(content)"><i class="fa fa-cart-arrow-down"
     aria-hidden="true">{{cartSize}}</i></button>
-
 <hr>
