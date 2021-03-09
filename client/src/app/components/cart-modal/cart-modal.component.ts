@@ -46,16 +46,20 @@ export class CartModalComponent implements OnInit {
   cartDetails() {
     this.cartService.getCartDetails().subscribe(res => {
       this.cart = res;
+      this.cartService.setCartSize(this.cart.length)
       this.totalCost = res.reduce((acc, item) => acc + item.priceWithAmount, 0)
       this.cartSize = this.cart.length
     })
   }
+
+
 
   amountChanged(item) {
     this.cartService.editFromCart(item).subscribe(res => {
       this.cart = res.products
       this.totalCost = res.products.reduce((acc, item) => acc + item.priceWithAmount, 0)
       this.cartSize = res.products.length
+      this.cartService.setCartSize(this.cart.length)
     })
   }
 
@@ -64,6 +68,7 @@ export class CartModalComponent implements OnInit {
       this.cart = res.products
       this.totalCost = res.products.reduce((acc, item) => acc + item.priceWithAmount, 0)
       this.cartSize = res.products.length
+      this.cartService.setCartSize(this.cart.length)
     })
   }
   checkout() {

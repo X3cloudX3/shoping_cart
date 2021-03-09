@@ -11,7 +11,6 @@ export class ProductsService {
 
   constructor(public http: HttpClient) {
   }
-
   getProducts(): Observable<any> {
 
     return this.http.get(`${baseUrl}/products/getProducts`)
@@ -25,7 +24,7 @@ export class ProductsService {
 
   addProducts(imageURL: string, name: string, category: string, price: number): Observable<any> {
 
-    return this.http.post(`${baseUrl}/products/addToCartNigga`, { imageURL, name, category, price })
+    return this.http.post(`${baseUrl}/products/addProduct`, { imageURL, name, category, price })
 
   }
 

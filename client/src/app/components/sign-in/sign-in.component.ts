@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { UserService } from "../../services/user/user.service"
 import { Router } from "@angular/router"
 
@@ -30,7 +30,7 @@ export class SignInComponent implements OnInit {
     this.userService.signIn(email, password).subscribe((res) => {
       localStorage.setItem("token", res.token)
       this.message = res.message
-      if (res.token) {
+      if (res.token) { 
         this.userService.setUserDetails(res)
         this.userService.setName(res.name)
         if (res.role === 'admin') {

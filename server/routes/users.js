@@ -41,7 +41,7 @@ router.post("/login", async (req, res, next) => {
 router.get('/getUserDetails', (req, res, next) => {
     const { autorization } = req.headers
     if (!autorization) {
-        res.json({ status: false, message: `sorry ${req.headers} you need a token` })
+        res.json({ status: false, message: `sorry ${req.headers} you need to login` })
     }
     else {
         jwt.verify(autorization, process.env.SECRET, (err, decoded) => {
@@ -49,9 +49,9 @@ router.get('/getUserDetails', (req, res, next) => {
                 return res.json({ status: false })
             }
             else {
-                const todayDate = (moment().format("YYYY-MM-DD"));
+                const minDate = moment().add(1, 'd').format("YYYY-MM-DD");
                 const { id, role, firstName, lastName, city, street } = decoded
-                res.json({ id, role, fullName: `${firstName} ${lastName}`, city, street, todayDate })
+                res.json({ id, role, fullName: `${firstName} ${lastName}`, city, street, minDate })
             }
         })
     }

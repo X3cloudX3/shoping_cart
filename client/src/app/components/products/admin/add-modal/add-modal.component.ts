@@ -65,9 +65,9 @@ export class AddModalComponent {
     this.modalService.dismissAll()
   }
 
- 
 
- 
+
+
   displayOptions(displayDevice) {
 
   }

@@ -35,10 +35,17 @@
             </div>
             <form>
                 <p>city</p> <input name="city" [(ngModel)]="city" type="text">
+                <span style="color:red">{{errors.cityError}}</span>
                 <p>street</p> <input name="street" [(ngModel)]="street" type="text">
-                <p>shipping Date</p> <input name="date" type="date" [(ngModel)]="date" min="{{date}}">
-                <p>credit card</p> <input name="cerditCard" [(ngModel)]="creditCard" type="text"
-                    placeholder="credit card">
+                <span style="color:red">{{errors.streetError}}</span>
+                <p>shipping Date</p> <input name="date" type="date" [(ngModel)]="date" min="{{date}}" >
+                <span style="color:red">{{errors.dateError}}</span>
+                <p>credit card</p>
+                <div>
+                    <span style="color:blue;">{{ccType}}</span>
+                    <span style="color:red">{{errors.creditCardError}}</span>
+                    <input name="cerditCard" [(ngModel)]="creditCard" type="text" placeholder="credit card">
+                </div>
                 <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
                     <div class="col">TOTAL PRICE</div>
                     <div class="col text-right"> {{totalCost}}₪</div>

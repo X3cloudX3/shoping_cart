@@ -22,9 +22,8 @@ import { EditModalComponent } from './components/products/admin/edit-modal/edit-
 import { AddModalComponent } from './components/products/admin/add-modal/add-modal.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CheckoutComponent } from './components/paymentCheckout/checkout/checkout.component';
-import { CartTableComponent } from './components/paymentCheckout/cart-table/cart-table.component';
-import { PaymentInfoComponent } from './components/paymentCheckout/payment-info/payment-info.component';
 import { HighlightSearchPipe } from './pipes/highlightSearchPipe/search-in-cart.pipe';
+import { InvoiceComponent } from './components/paymentCheckout/invoice/invoice.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,9 +39,8 @@ import { HighlightSearchPipe } from './pipes/highlightSearchPipe/search-in-cart.
     EditModalComponent,
     AddModalComponent,
     CheckoutComponent,
-    CartTableComponent,
-    PaymentInfoComponent,
     HighlightSearchPipe,
+    InvoiceComponent,
   ],
   imports: [
     BrowserModule,

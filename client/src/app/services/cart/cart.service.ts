@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http"
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 const baseUrl = "http://localhost:4000"
 
@@ -8,7 +8,10 @@ const baseUrl = "http://localhost:4000"
   providedIn: 'root'
 })
 export class CartService {
+  subject = new Subject()
+  cartSize: Number
   constructor(public http: HttpClient) {
+    this.cartSize = 0
   }
   addToCart(category: string, imageURL: string, name: string, price: number, priceWithAmount: number, amount: number): Observable<any> {
     return (this.http.post(`${baseUrl}/cart/addToCart`, { imageURL, category, name, price, amount, priceWithAmount }))
@@ -22,6 +25,11 @@ export class CartService {
   editFromCart(item): Observable<any> {
     return this.http.post(`${baseUrl}/cart/editItemFromCart`, { item })
   }
+
+  setCartSize(size) {
+    this.cartSize = size
+  }
+
 }
 
 

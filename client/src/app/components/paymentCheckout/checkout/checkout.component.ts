@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CartService } from 'src/app/services/cart/cart.service';
+import { CheckoutService } from 'src/app/services/checkout/checkout.service';
 import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
@@ -18,8 +19,11 @@ export class CheckoutComponent implements OnInit {
   city: string
   street: string
   product: any;
-  date: any;
-  creditCard: number
+  date: string;
+  minDate: string
+  creditCard: number;
+  errors: any;
+  ccType: string
   ngOnInit() {
     this.initForm()
     this.getCartDetails()
@@ -33,10 +37,18 @@ export class CheckoutComponent implements OnInit {
     this.city = ""
     this.street = ""
     this.date = ""
+    this.minDate = ""
     this.creditCard = 0
+    this.errors = {
+      cityError: "",
+      streetError: "",
+      dateError: "",
+      creditCardError: "",
+    }
+    this.ccType = ""
   }
 
-  constructor(private formBuilder: FormBuilder, public cartService: CartService, public router: Router, public userService: UserService) { }
+  constructor(private formBuilder: FormBuilder, public cartService: CartService, public router: Router, public userService: UserService, public checkoutService: CheckoutService) { }
 
 
   getCartDetails() {
@@ -52,14 +64,75 @@ export class CheckoutComponent implements OnInit {
 
   getUserDetails() {
     this.userService.getUserDetails().subscribe((res) => {
-      const { city, street, todayDate } = res
+      const { city, street, minDate } = res
       this.city = city
       this.street = street
-      this.date = todayDate
+      this.minDate = minDate
+      this.date = minDate
+
     })
   }
-  checkout() {
-
-
+  handleErrors(city, street, date, creditCard) {
+    this.resetErrorsAndSucsses()
+    if (!city) return this.errors.cityError = "city is required."
+    if (!street) return this.errors.streetError = "street is required."
+    this.checkDate(date)
+    if (!creditCard) return this.errors.creditCardError = "credit card is required."
+    this.cardREGEX(creditCard)
+    return false
   }
+
+  resetErrorsAndSucsses() {
+    this.errors = {
+      cityError: "",
+      streetError: "",
+      dateError: "",
+      creditCardError: "",
+    }
+    this.ccType = ""
+  }
+
+  checkout() {
+    const { cart, itemsAmount, totalCost, city, street, date, creditCard, ccType } = this
+    if (this.handleErrors(city, street, date, creditCard)) {
+      return
+    }
+    this.checkoutService.checkout(city, street, date, creditCard)
+      .subscribe(res => {
+      })
+    this.router.navigate(["/invoice"])
+  }
+
+  cardREGEX(cc) {
+    if (/^4580+[0-9]{12}$|^4557+[0-9]{12}$/.test(cc)) {
+      return this.ccType = "visa"
+    }
+    if (/^5326(1003)[0-9]{8}$|^5326(1011)[0-9]{8}$|^5326(1012)[0-9]{8}$|^5326(1013)[0-9]{8}$|^5326(1014)[0-9]{8}$|^5326(1103)[0-9]{8}$/.test(cc)) {
+      return this.ccType = "master card by isracard"
+    }
+    if (/^5189(54)+[0-9]{10}$|5189(89)+[0-9]{10}$|5189(46)+[0-9]{10}$|5189(06)+[0-9]{10}$|5189(07)+[0-9]{10}$|5189(83)+[0-9]{10}$/.test(cc)) {
+      return this.ccType = "master card by cal"
+    }
+
+    if (/^1[0-9]{1,12}$|^2[0-9]{1,12}$|^2[0-9]{1,12}$|^6[0-9]{1,12}$|^7[0-9]{1,12}$|^8[0-9]{1,12}$|^9[0-9]{1,12}$/.test(cc)) {
+      return this.ccType = "private 12 digits card"
+    }
+    if (/^36[0-9]{14}/.test(cc)) {
+      return this.ccType = "diners"
+    }
+    if (/^3755[0-9]{12}/.test(cc)) {
+      return this.ccType = "american express"
+    }
+    return (this.errors.creditCardError = "not valid credit card")
+  }
+
+  checkDate(date) {
+    if (!date) {
+      return this.errors.dateError = "please choose a delivery date"
+    }
+    if (date < this.minDate) {
+      return this.errors.dateError = "please choose a valid delivery date"
+    }
+  }
+
 }

@@ -10,7 +10,7 @@ export class HighlightSearchPipe implements PipeTransform {
       if (startIndex != -1) {
         let endLength = args.length;
         let matchingString = value.substr(startIndex, endLength);
-        return value.replace(matchingString, `<b> ${matchingString} </b>`);
+        return value.replace(matchingString, `<b>${matchingString}</b>`);
       }
     }
     return value;

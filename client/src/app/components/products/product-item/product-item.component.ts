@@ -21,7 +21,14 @@ export class ProductItemComponent implements OnInit {
   addToCart(product: any, amount: number) {
     const { category, imageURL, name, price } = product
     const priceWithAmount = Math.round(price * amount)
-    this.cartService.addToCart(category, imageURL, name, price, priceWithAmount, amount).subscribe()
+    this.cartService.addToCart(category, imageURL, name, price, priceWithAmount, amount).subscribe(res => {
+      if (res) {
+        this.cartService.getCartDetails().subscribe(res => {
+          this.cartService.setCartSize(res.length);
+        })
+      }
+    })
+
     this.amount = 1
   }
 }

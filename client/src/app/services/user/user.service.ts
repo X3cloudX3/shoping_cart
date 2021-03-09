@@ -41,8 +41,6 @@ export class UserService {
 
 
   signUp(): Observable<any> {
-    console.log('part one', this.userPartOneDetails);
-    console.log('part two', this.userPartTwoDetails);
     return this.http.post(`${baseURL}/users/register`, { ...this.userPartOneDetails, ...this.userPartTwoDetails })
   }
   signIn(email: string, password: string): Observable<any> {
@@ -64,7 +62,7 @@ export class UserService {
     const { id, email } = this.userPartOneDetails
     return this.http.post(`${baseURL}/users/checkIfExists`, { id, email })
   }
-
+ 
   setName(name) {
     this.name = name
   }

@@ -7,7 +7,7 @@ router.post("/addToCart", async (req, res) => {
     const { imageURL, category, name, price, amount, priceWithAmount } = req.body;
     const userId = ObjectID(req.headers.user._id);
     try {
-        let cart = await Cart.findOne({ userId });
+        let cart = await Cart.findOne({ userId, active: true });
         if (cart) {
             //cart exists for user
             let itemIndex = cart.products.findIndex(p => p.name == name);
@@ -52,12 +52,13 @@ router.post("/addToCart", async (req, res) => {
 
 router.get("/getCartDetails", async (req, res, next) => {
     try {
-        const [result] = await Cart.find({});
-        if (!result) return next(new Error("error message"))
-        res.status(201).send(result.products);
+        const userId = ObjectID(req.headers.user._id);
+        let cart = await Cart.findOne({ userId, active: true });
+        if (!cart) return res.status(404).send("no active carts were found");
+        res.status(201).send(cart.products);
     } catch (err) {
         console.log(err);
-        res.status(404).send("cart not found");
+        res.status(404).send("no active carts were found");
     }
 
 });
@@ -67,7 +68,7 @@ router.post("/editItemFromCart", async (req, res, next) => {
 
     const userId = ObjectID(req.headers.user._id);
     try {
-        let cart = await Cart.findOne({ userId });
+        let cart = await Cart.findOne({ userId, active: true });
         if (cart) {
             let itemIndex = cart.products.findIndex(p => p._id == item._id);
             if (itemIndex > -1) {
@@ -86,7 +87,7 @@ router.post("/editItemFromCart", async (req, res, next) => {
                 return res.status(404).send("item not found");
             }
         } else {
-            return res.status(404).send("cart not found");
+            return res.status(404).send("no active carts found");
         }
     } catch (err) {
         console.log(err);
@@ -97,7 +98,7 @@ router.post("/deleteFromCart", async (req, res, next) => {
     const { item } = req.body
     const userId = ObjectID(req.headers.user._id);
     try {
-        let cart = await Cart.findOne({ userId });
+        let cart = await Cart.findOne({ userId, active: true });
         if (cart) {
             let itemIndex = cart.products.findIndex(p => p._id == item._id);
             if (itemIndex > -1) {
