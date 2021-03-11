@@ -8,7 +8,6 @@ import { ProductsService } from '../../../../services/products/products.service'
   templateUrl: './edit-modal.component.html'
 })
 export class EditModalComponent implements OnInit {
-  @Output() getUpdateStatusChange = new EventEmitter<any>();
   @Input() product
   checkoutForm;
 
@@ -34,6 +33,7 @@ export class EditModalComponent implements OnInit {
     public productService: ProductsService) { }
 
   open(content) {
+    this.productService.clearProduct()
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
@@ -43,9 +43,10 @@ export class EditModalComponent implements OnInit {
 
   onSubmit(productEditValue) {
     this.productService.editProducts(productEditValue).subscribe((res) => {
-      console.log(res.message);
-      if (res.message) {
-        this.getUpdateStatusChange.emit(res.message)
+      if (res) {
+        this.productService.sendProduct(res)
+      } else {
+        alert('product was not saved')
       }
     })
     this.modalService.dismissAll()

@@ -11,7 +11,7 @@ import { UserService } from 'src/app/services/user/user.service';
 export class ProductItemComponent implements OnInit {
   amount: number
   userID: number
-  cart: Array<any>
+  searchTerm: string
   constructor(public cartService: CartService, public productsService: ProductsService) { }
   @Input() product
   ngOnInit() {
@@ -24,7 +24,7 @@ export class ProductItemComponent implements OnInit {
     this.cartService.addToCart(category, imageURL, name, price, priceWithAmount, amount).subscribe(res => {
       if (res) {
         this.cartService.getCartDetails().subscribe(res => {
-          this.cartService.setCartSize(res.length);
+          this.cartService.setCartSize(res.products.length);
         })
       }
     })

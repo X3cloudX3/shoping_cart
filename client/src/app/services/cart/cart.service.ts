@@ -29,7 +29,9 @@ export class CartService {
   setCartSize(size) {
     this.cartSize = size
   }
-
+  deleteCart(item): Observable<any> {
+    return this.http.post(`${baseUrl}/cart/deleteCart`, { item })
+  }
 }
 
 

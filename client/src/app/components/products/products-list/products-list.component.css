@@ -10,3 +10,20 @@
     flex-wrap: wrap;
     justify-content:center;
 }
+
+input[type=search] {
+	background: #555;
+	border: solid 1px #ccc;
+	margin-left: 8%;
+	padding: 9px 10px 9px 32px;
+	background-color: #ccc;
+	border-color: #333;
+	border: solid 1px #fff;
+}
+.categorySelect{
+	background: #555;
+	border: solid 1px #ccc;
+	background-color: #ccc;
+	border-color: #333;
+	border: solid 1px #fff;
+}

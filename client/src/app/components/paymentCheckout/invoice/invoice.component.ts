@@ -2,6 +2,8 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { CheckoutService } from 'src/app/services/checkout/checkout.service';
 import { jsPDF } from "jspdf"
 import html2canvas from 'html2canvas';
+import { CartService } from 'src/app/services/cart/cart.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-invoice',
@@ -9,7 +11,7 @@ import html2canvas from 'html2canvas';
   styleUrls: ['./invoice.component.css']
 })
 export class InvoiceComponent implements OnInit {
-  cart: Array<any>
+  cart: any
   ccType: string
   creditCard: string
   city: string
@@ -44,13 +46,13 @@ export class InvoiceComponent implements OnInit {
     this.initForm()
     this.getInvoiceData()
   }
-  constructor(public checkoutService: CheckoutService,) { }
+  constructor(public checkoutService: CheckoutService, public cartService: CartService, public router: Router) { }
 
   getInvoiceData() {
     this.checkoutService.getInvoice().subscribe(res => {
       const { cart, checkout, creditCard, orderDate, fullName, email, dateToShip } = res
       const { _id, street, city, ccType } = checkout
-      this.cart = cart
+      this.cart = cart.products
       this.ccType = ccType
       this.creditCard = creditCard
       this.city = city
@@ -69,23 +71,29 @@ export class InvoiceComponent implements OnInit {
     this.subtotal = fullPrice / 1.17
     this.vat = (fullPrice - this.subtotal)
   }
-  public openPDF():void {
+  public openPDF(): void {
     let DATA = document.getElementById('htmlData');
-      
+
     html2canvas(DATA).then(canvas => {
-        
-        let fileWidth = 208;
-        let fileHeight = canvas.height * fileWidth / canvas.width;
-        
-        const FILEURI = canvas.toDataURL('image/png')
-        let PDF = new jsPDF('p', 'mm', 'a4');
-        let position = 0;
-        PDF.addImage(FILEURI, 'PNG', 0, position, fileWidth, fileHeight)
-        
-        PDF.save('invoice.pdf');
-    });     
+      let fileWidth = 208;
+      let fileHeight = canvas.height * fileWidth / canvas.width;
+      const FILEURI = canvas.toDataURL('image/png')
+      let PDF = new jsPDF('p', 'mm', 'a4');
+      let position = 0;
+      PDF.addImage(FILEURI, 'PNG', 0, position, fileWidth, fileHeight)
+      PDF.save('invoice.pdf');
+    });
   }
-  backToShopping(){
-    
+
+  backToShopping() {
+    this.cartService.deleteCart(this.cart._id).subscribe(res => {
+      if (res) {
+        this.cartService.setCartSize(res.products.length)
+        this.checkoutService
+        this.router.navigate(["/products"])
+      } else {
+        alert('somthing went wrong')
+      }
+    })
   }
 }

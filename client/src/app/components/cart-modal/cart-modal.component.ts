@@ -45,9 +45,9 @@ export class CartModalComponent implements OnInit {
 
   cartDetails() {
     this.cartService.getCartDetails().subscribe(res => {
-      this.cart = res;
+      this.cart = res.products;
       this.cartService.setCartSize(this.cart.length)
-      this.totalCost = res.reduce((acc, item) => acc + item.priceWithAmount, 0)
+      this.totalCost = res.products.reduce((acc, item) => acc + item.priceWithAmount, 0)
       this.cartSize = this.cart.length
     })
   }

@@ -24,6 +24,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CheckoutComponent } from './components/paymentCheckout/checkout/checkout.component';
 import { HighlightSearchPipe } from './pipes/highlightSearchPipe/search-in-cart.pipe';
 import { InvoiceComponent } from './components/paymentCheckout/invoice/invoice.component';
+import { SearchFilterPipe } from './pipes/filterPipe/search-filter.pipe';
+import { SelectFilterPipePipe } from './pipes/selectPipe/select-filter-pipe.pipe';
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,6 +43,8 @@ import { InvoiceComponent } from './components/paymentCheckout/invoice/invoice.c
     CheckoutComponent,
     HighlightSearchPipe,
     InvoiceComponent,
+    SearchFilterPipe,
+    SelectFilterPipePipe,
   ],
   imports: [
     BrowserModule,

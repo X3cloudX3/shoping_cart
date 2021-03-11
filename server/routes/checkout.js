@@ -12,7 +12,6 @@ router.post("/finishCheckout", async (req, res) => {
         const { city, street, date, creditCard } = req.body
         const ccType = checkCC(creditCard)
         const encryptedCC = encryptCC(creditCard)
-        console.log(encryptedCC);
         const userId = ObjectID(req.headers.user._id);
         let cart = await Cart.findOne({ userId, active: true });
         if (cart) {
@@ -25,9 +24,6 @@ router.post("/finishCheckout", async (req, res) => {
                 cartDetails: cart,
                 userDetails: userId
             });
-            // Cart.findOneAndUpdate({ userId, active: true }, { $set: { active: false } }, { new: true }, (err, doc) => {
-            //     if (err) { }
-            // });
             return res.status(201).send(checkout);
         } else {
             console.log('cart not found');
@@ -52,7 +48,7 @@ router.get("/getInvoiceDetails", async (req, res) => {
             let decryptedCC = decryptCC(encryptedCC)
             let dateToShip = moment(shippingDate).format("Do MMMM YYYY");
             const orderDate = moment().format("Do MMMM YYYY");
-            return res.status(201).json({ cart: cart.products, checkout: checkout, creditCard: decryptedCC, orderDate, email, fullName: `${firstName} ${lastName}`, dateToShip });
+            return res.status(201).json({ cart: cart, checkout: checkout, creditCard: decryptedCC, orderDate, email, fullName: `${firstName} ${lastName}`, dateToShip });
         } else {
             return res.status(404).send("no active invoice found");
         }
@@ -62,5 +58,18 @@ router.get("/getInvoiceDetails", async (req, res) => {
         res.status(500).send("Something went wrong");
     }
 });
+
+router.post("/terminateInvoice", async (req, res, next) => {
+    const { item } = req.body
+    const userId = ObjectID(req.headers.user._id);
+    let checkout = await checkoutModel.findOne({ userDetails: userId, active: true });
+    try {
+
+
+    } catch (err) {
+        console.log(err);
+        res.status(500).send(err);
+    }
+})
 
 module.exports = router;

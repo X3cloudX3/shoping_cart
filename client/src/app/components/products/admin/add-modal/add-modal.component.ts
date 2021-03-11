@@ -8,7 +8,6 @@ import { ProductsService } from '../../../../services/products/products.service'
   templateUrl: './add-modal.component.html'
 })
 export class AddModalComponent {
-  @Output() addProductStatusUpdate = new EventEmitter<string>();
   @Input() product
   checkoutForm;
   imageURL: string
@@ -42,6 +41,7 @@ export class AddModalComponent {
   }
 
   open(content) {
+    this.productService.clearProduct()
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
@@ -56,11 +56,11 @@ export class AddModalComponent {
       return
     }
     this.productService.addProducts(imageURL, name, category, price).subscribe((res) => {
-      console.log(res.message);
-      if (res.message) {
-        this.addProductStatusUpdate.emit(res.message)
+      if (res) {
+        this.productService.sendProduct(res)
+      } else {
+        alert('product was not saved')
       }
-
     })
     this.modalService.dismissAll()
   }

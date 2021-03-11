@@ -28,7 +28,6 @@ export class RoutesLinksComponent implements OnInit {
 
   ngOnInit() {
     this.userService.getDetails().subscribe(res => {
-      console.log(res);
       this.username = res.fullName
       this.role = res.role
     })
@@ -37,11 +36,6 @@ export class RoutesLinksComponent implements OnInit {
       this.role = res.role ? res.role : "guest"
       if (res.status === false) localStorage.setItem("token", "")
       this.userService.setName(res.fullName)
-      this.cartService.getCartDetails().subscribe(res => {
-        if (res && this.role != 'guest') {
-          this.modalService.open(this.content);
-        }
-      })
     })
 
   }

@@ -19,19 +19,5 @@
         <span *ngIf="role !== 'guest'" style="margin: 5px; font-size: 20px;">|</span>
         <button *ngIf="role !== 'guest'" class="sign-out-button btn btn-dark" (click)="signOut()">Sign Out</button>
     </div>
-    <!-- modal start -->
-    <ng-template #content let-modal>
-        <div class="modal-header">
-            <h4 class="modal-title" id="modal-basic-title">cart progress not finished</h4>
-        </div>
-        <div class="modal-body">
-            <p>hey! we see you left without finishing your previous shopping cart would you like finish your purchase?
-            </p>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-success" (click)="modal.close()">yes</button>
-            <button type="button" class="btn btn-danger" (click)="deleteCart()">no</button>
-        </div>
-    </ng-template>
-    <!-- modal end -->
+  
 </nav>

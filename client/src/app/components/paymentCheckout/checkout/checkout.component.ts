@@ -53,9 +53,9 @@ export class CheckoutComponent implements OnInit {
 
   getCartDetails() {
     this.cartService.getCartDetails().subscribe(res => {
-      this.cart = res
-      this.itemsAmount = res.reduce((acc, item) => acc + item.amount, 0);
-      this.totalCost = res.reduce((acc, item) => acc + item.priceWithAmount, 0)
+      this.cart = res.products
+      this.itemsAmount = res.products.reduce((acc, item) => acc + item.amount, 0);
+      this.totalCost = res.products.reduce((acc, item) => acc + item.priceWithAmount, 0)
     })
   }
   backToShop() {

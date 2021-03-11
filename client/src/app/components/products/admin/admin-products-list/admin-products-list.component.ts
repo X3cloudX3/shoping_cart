@@ -7,29 +7,34 @@ import { ProductsService } from 'src/app/services/products/products.service';
   styleUrls: ['./admin-products-list.component.css']
 })
 export class AdminProductsListComponent implements OnInit {
-  public products
+  public products: Array<any>
   public selectedCategory
+  public categories: Array<any>
+  public sel: any
   constructor(public productsService: ProductsService) {
     this.products = []
+    this.categories = []
+    this.sel = 0
   }
 
 
   ngOnInit() {
     this.getData()
+    this.getDataAfterChange()
   }
-
+  getDataAfterChange() {
+    this.productsService.getProduct().subscribe(product => {
+      if (product) {
+      return  this.getData()
+      }
+    })
+  }
   getData() {
     this.productsService.getProducts().subscribe((res) => {
       this.products = res.result
+      this.categories = this.products.filter((item, index, array) => {
+        return array.map((mapItem) => mapItem['category']).indexOf(item['category']) === index
+      })
     })
-  }
-  onAddSave(save: string) {
-    save === 'product saved' ? this.getData() : alert('product was not saved')
-  }
-
-  onChanged(changed: string) {
-    if (changed === 'product was edited') {
-      this.getData()
-    }
   }
 }

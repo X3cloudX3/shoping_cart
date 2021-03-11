@@ -9,7 +9,6 @@ const {
 async function isUserExist(userEmail, password) {
     try {
         const [result] = await getUser(userEmail);
-        console.log(result);
         const { PasswordHash } = result
         if (!result) throw new Error("user not found"); else {
             const comparePassword = await checkPassword(password, PasswordHash)
