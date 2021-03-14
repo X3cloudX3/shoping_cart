@@ -11,23 +11,27 @@ router.post("/finishCheckout", async (req, res) => {
     try {
         const { city, street, date, creditCard } = req.body
         const ccType = checkCC(creditCard)
-        const encryptedCC = encryptCC(creditCard)
-        const userId = ObjectID(req.headers.user._id);
-        let cart = await Cart.findOne({ userId, active: true });
-        if (cart) {
-            const checkout = await checkoutModel.create({
-                city: city,
-                street: street,
-                ccType: ccType,
-                shippingDate: date,
-                encryptedCC: encryptedCC,
-                cartDetails: cart,
-                userDetails: userId
-            });
-            return res.status(201).send(checkout);
+        if (!ccType) {
+            res.status(500).send('somthing went wrong with credit card')
         } else {
-            console.log('cart not found');
-            res.status(404).send('cart not found')
+            const encryptedCC = encryptCC(creditCard)
+            const userId = ObjectID(req.headers.user._id);
+            let cart = await Cart.findOne({ userId, active: true });
+            if (cart) {
+                const checkout = await checkoutModel.create({
+                    city: city,
+                    street: street,
+                    ccType: ccType,
+                    shippingDate: date,
+                    encryptedCC: encryptedCC,
+                    cartDetails: cart,
+                    userDetails: userId
+                });
+                return res.status(201).send(checkout);
+            } else {
+                console.log('cart not found');
+                res.status(404).send('cart not found')
+            }
         }
     } catch (err) {
         console.log(err);

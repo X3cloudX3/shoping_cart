@@ -76,9 +76,10 @@ export class CheckoutComponent implements OnInit {
     this.resetErrorsAndSucsses()
     if (!city) return this.errors.cityError = "city is required."
     if (!street) return this.errors.streetError = "street is required."
-    this.checkDate(date)
+    if (this.checkDate(date)) return
     if (!creditCard) return this.errors.creditCardError = "credit card is required."
-    this.cardREGEX(creditCard)
+    if (!this.cardREGEX(creditCard)) return
+
     return false
   }
 
@@ -97,10 +98,12 @@ export class CheckoutComponent implements OnInit {
     if (this.handleErrors(city, street, date, creditCard)) {
       return
     }
-    this.checkoutService.checkout(city, street, date, creditCard)
-      .subscribe(res => {
-      })
-    this.router.navigate(["/invoice"])
+    this.checkoutService.checkout(city, street, date, creditCard).subscribe(res => {
+      if (res.encryptedCC != 'false') {
+        this.router.navigate(["/invoice"])
+      }
+    })
+
   }
 
   cardREGEX(cc) {
@@ -123,7 +126,7 @@ export class CheckoutComponent implements OnInit {
     if (/^3755[0-9]{12}/.test(cc)) {
       return this.ccType = "american express"
     }
-    return (this.errors.creditCardError = "not valid credit card")
+    return (this.errors.creditCardError = "we do not except this credit card", false)
   }
 
   checkDate(date) {
@@ -133,6 +136,7 @@ export class CheckoutComponent implements OnInit {
     if (date < this.minDate) {
       return this.errors.dateError = "please choose a valid delivery date"
     }
+    return false
   }
 
 }

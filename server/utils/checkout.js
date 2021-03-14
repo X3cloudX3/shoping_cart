@@ -30,7 +30,7 @@ function decryptCC(encryptedCC) {
     let ciphertext = input.slice(16);
     let plaintext = decipher.update(ciphertext) + decipher.final();
     plaintext = plaintext.replace(/.(?=.{4})/g, '*').toString().slice(-8);
-    return plaintext ;
+    return plaintext;
 }
 
 function checkCC(cc) {

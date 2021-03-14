@@ -103,7 +103,7 @@ export class InvoiceComponent implements OnInit {
     this.cartService.deleteCart(this.cartID).subscribe(res => {
       if (res) {
         this.cartService.setCartSize(res.products.length)
-        this.checkoutService.closeinvoice(this.orderID).subscribe(res => {
+        this.checkoutService.closeInvoice(this.orderID).subscribe(res => {
           if (res) {
             this.router.navigate(["/products"])
           } else {
