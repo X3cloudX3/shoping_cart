@@ -105,6 +105,7 @@ export class InvoiceComponent implements OnInit {
         this.cartService.setCartSize(res.products.length)
         this.checkoutService.closeInvoice(this.orderID).subscribe(res => {
           if (res) {
+            this.cartService.isCartHidden(false)
             this.router.navigate(["/products"])
           } else {
             alert('somthing went wrong')

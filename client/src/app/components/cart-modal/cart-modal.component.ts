@@ -72,7 +72,7 @@ export class CartModalComponent implements OnInit {
     })
   }
   checkout() {
-
+    this.cartService.isCartHidden(true)
     this.router.navigate(["/checkout"])
     this.modalService.dismissAll()
   }

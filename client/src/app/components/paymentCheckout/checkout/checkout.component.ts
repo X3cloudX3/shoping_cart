@@ -59,6 +59,7 @@ export class CheckoutComponent implements OnInit {
     })
   }
   backToShop() {
+    this.cartService.isCartHidden(false)
     this.router.navigate(["/products"])
   }
 
