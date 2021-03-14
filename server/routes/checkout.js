@@ -48,6 +48,7 @@ router.get("/getInvoiceDetails", async (req, res) => {
             let decryptedCC = decryptCC(encryptedCC)
             let dateToShip = moment(shippingDate).format("Do MMMM YYYY");
             const orderDate = moment().format("Do MMMM YYYY");
+
             return res.status(201).json({ cart: cart, checkout: checkout, creditCard: decryptedCC, orderDate, email, fullName: `${firstName} ${lastName}`, dateToShip });
         } else {
             return res.status(404).send("no active invoice found");
@@ -64,8 +65,13 @@ router.post("/terminateInvoice", async (req, res, next) => {
     const userId = ObjectID(req.headers.user._id);
     let checkout = await checkoutModel.findOne({ userDetails: userId, active: true });
     try {
-
-
+        checkout.active = false
+        checkout = checkout.save()
+        if (checkout) {
+            res.status(200).send(checkout)
+        } else {
+            res.status(500).send('somthing went wrong')
+        }
     } catch (err) {
         console.log(err);
         res.status(500).send(err);

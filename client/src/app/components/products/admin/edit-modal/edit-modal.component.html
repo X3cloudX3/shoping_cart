@@ -11,17 +11,21 @@
                 <label for="form1" class="">imageURL</label>
                 <input mdbInput value="{{product.imageURL}}" name="imageURL" type="text" formControlName="imageURL"
                     id="form1" class="form-control">
+                <span>{{errors.imageError}}</span><br>
                 <label for="form1" class="">name</label>
-                <input mdbInput value="{{product.name}}" type="text" formControlName="name" id="form1"
+                <input mdbInput value="{{product.name}}" type="text" formControlName="name" id="form2"
                     class="form-control">
+                <span>{{errors.nameError}}</span><br>
                 <label for="form1" class="">category</label>
-                <input mdbInput value="{{product.category}}" type="text" formControlName="category" id="form1"
+                <input mdbInput value="{{product.category}}" type="text" formControlName="category" id="form3"
                     class="form-control">
+                <span>{{errors.categoryError}}</span><br>
                 <label for="form1" class="">price in ils</label>
-                <input mdbInput value="{{product.price}}" type="number" formControlName="price" id="form1"
+                <input mdbInput value="{{product.price}}" type="number" formControlName="price" id="form4"
                     class="form-control">
+                <span>{{errors.priceError}}</span><br>
             </div>
-            <button type="submit" class="btn btn-block btn-outline-dark"
+            <button type="button" class="btn btn-block btn-outline-dark"
                 (click)=" onSubmit(checkoutForm.value)">Save</button>
         </form>
     </div>

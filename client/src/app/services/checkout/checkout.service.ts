@@ -16,4 +16,7 @@ export class CheckoutService {
   getInvoice(): Observable<any> {
     return this.http.get(`${baseUrl}/checkout/getInvoiceDetails`)
   }
+  closeinvoice(item: any): Observable<any> {
+    return this.http.post(`${baseUrl}/checkout//terminateInvoice`, { item })
+  }
 }

@@ -4,7 +4,9 @@ const CartSchema = new mongoose.Schema(
     {
         userId: {
             type: mongoose.Schema.Types.ObjectId,
+            sparse: true,
             ref: "users",
+
         },
         products: [
             {

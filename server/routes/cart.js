@@ -1,13 +1,14 @@
 const express = require("express");
 const router = express.Router();
 const Cart = require("../database/models/cartSchema");
+const User = require("../database/models/userSchema");
 const ObjectID = require('mongodb').ObjectID;
 
 router.post("/addToCart", async (req, res) => {
     const { imageURL, category, name, price, amount, priceWithAmount } = req.body;
-    const userId = ObjectID(req.headers.user._id);
+    const userID = ObjectID(req.headers.user._id);
     try {
-        let cart = await Cart.findOne({ userId: userId });
+        let cart = await Cart.findOne({ userId: userID });
         if (cart) {
             //cart exists for user
             let itemIndex = cart.products.findIndex(p => p.name == name);
@@ -37,10 +38,10 @@ router.post("/addToCart", async (req, res) => {
             }
             return res.status(201).send(cart);
         } else {
-            console.log('no cart');
+            console.log('no cart', userID);
             //no cart for user, create new cart
             const newCart = await Cart.create({
-                userId,
+                userId: userID,
                 products: [{ imageURL, category, name, price, amount, priceWithAmount }]
             });
             return res.status(201).send(newCart);

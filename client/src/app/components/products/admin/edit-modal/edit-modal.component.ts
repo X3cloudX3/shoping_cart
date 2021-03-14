@@ -9,13 +9,13 @@ import { ProductsService } from '../../../../services/products/products.service'
 })
 export class EditModalComponent implements OnInit {
   @Input() product
-  checkoutForm;
-
+  checkoutForm: any;
+  errors: any
   ngOnInit() {
     this.initForm();
   }
 
-  initForm() { 
+  initForm() {
     this.checkoutForm = this.formBuilder.group({
       id: new FormControl(this.product._id),
       imageURL: new FormControl(this.product.imageURL),
@@ -23,6 +23,12 @@ export class EditModalComponent implements OnInit {
       category: new FormControl(this.product.category),
       price: new FormControl(this.product.price)
     });
+    this.errors = {
+      imageError: "",
+      nameError: "",
+      categoryError: "",
+      priceError: "",
+    }
   }
 
   closeResult = '';
@@ -30,9 +36,12 @@ export class EditModalComponent implements OnInit {
 
   constructor(private modalService: NgbModal,
     private formBuilder: FormBuilder,
-    public productService: ProductsService) { }
+    public productService: ProductsService) {
+
+  }
 
   open(content) {
+    this.resetErrors()
     this.productService.clearProduct()
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
@@ -42,6 +51,12 @@ export class EditModalComponent implements OnInit {
   }
 
   onSubmit(productEditValue) {
+    this.resetErrors()
+    const { imageURL, name, category, price } = productEditValue
+    if (!imageURL) return this.errors.imageError = "image is required."
+    if (!name) return this.errors.nameError = "name is required."
+    if (!category) return this.errors.categoryError = "category is required."
+    if (price <= 0) return this.errors.priceError = "price must be above 0 ."
     this.productService.editProducts(productEditValue).subscribe((res) => {
       if (res) {
         this.productService.sendProduct(res)
@@ -50,6 +65,16 @@ export class EditModalComponent implements OnInit {
       }
     })
     this.modalService.dismissAll()
+  }
+
+
+  resetErrors() {
+    this.errors = {
+      imageError: "",
+      nameError: "",
+      categoryError: "",
+      priceError: "",
+    }
   }
 
   displayOptions(displayDevice) {
