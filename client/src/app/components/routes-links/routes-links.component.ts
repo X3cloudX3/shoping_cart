@@ -1,6 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, TemplateRef } from '@angular/core';
 import { UserService } from 'src/app/services/user/user.service';
 import { Router } from '@angular/router';
+import { CartService } from 'src/app/services/cart/cart.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { CheckoutService } from 'src/app/services/checkout/checkout.service';
 
 
 @Component({
@@ -11,18 +14,20 @@ import { Router } from '@angular/router';
 export class RoutesLinksComponent implements OnInit {
   @Input() routes
   @Input() prefix
+
+  @ViewChild('content', { static: false }) content: TemplateRef<any>;
+
   public username: String
-  public cartSize: Number
   public role: String
-  constructor(public userService: UserService, public router: Router) {
+  public closeCart: boolean
+  constructor(public userService: UserService, public checkoutService: CheckoutService, public cartService: CartService, private modalService: NgbModal, public router: Router) {
     this.username = "Guest"
-    this.cartSize = 100
     this.role = "guest"
+    this.closeCart = false
   }
 
   ngOnInit() {
     this.userService.getDetails().subscribe(res => {
-      console.log(res);
       this.username = res.fullName
       this.role = res.role
     })
@@ -32,6 +37,7 @@ export class RoutesLinksComponent implements OnInit {
       if (res.status === false) localStorage.setItem("token", "")
       this.userService.setName(res.fullName)
     })
+
   }
   signOut() {
     localStorage.setItem("token", "")
@@ -39,4 +45,6 @@ export class RoutesLinksComponent implements OnInit {
     this.username = "Guest"
     this.router.navigate(["/home"])
   }
+
+
 }

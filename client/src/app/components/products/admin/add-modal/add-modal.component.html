@@ -1,0 +1,35 @@
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">add product</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="form-group">
+            <label for="exampleInputEmail1">imageURL</label>
+            <input [(ngModel)]="imageURL" type="text" class="form-control" id="form1" placeholder="imageURL">
+            <span>{{errors.imageError}}</span>
+        </div>
+        <div class="form-group">
+            <label for="exampleInputEmail1">name</label>
+            <input [(ngModel)]="name" type="text" class="form-control" id="form2" placeholder="name">
+            <p>{{errors.nameError}}</p>
+        </div>
+        <div class="form-group">
+            <label for="exampleInputEmail1">category</label>
+            <input id="typeahead-focus" type="text" class="form-control" [(ngModel)]="category" [ngbTypeahead]="search"
+                (focus)="focus$.next($any($event).target.value)" (click)="click$.next($any($event).target.value)"
+                #instance="ngbTypeahead" placeholder="please add or select a category" />
+            <span>{{errors.categoryError}}</span>
+        </div>
+        <div class="form-group">
+            <label for="exampleInputEmail1">price in ils</label>
+            <input [(ngModel)]="price" type="text" class="form-control" id="form4" placeholder="price in ils">
+            <span>{{errors.priceError}}</span>
+        </div>
+        <button type="button" class="btn btn-block btn-outline-dark" (click)=" addProduct()">Save</button>
+    </div>
+</ng-template>
+
+<button class="btn btn-success" (click)="open(content)">add product</button>

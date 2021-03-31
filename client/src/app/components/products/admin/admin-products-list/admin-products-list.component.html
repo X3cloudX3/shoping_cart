@@ -1,0 +1,19 @@
+<div class="products-main-div">
+    <div class="row container  align-content-center">
+        <addProduct-modal-basic></addProduct-modal-basic>
+        <input [(ngModel)]="searchTerm" class="form-control mr-sm-2 col-sm-5 " type="search"
+            placeholder="Search products" aria-label="Search">
+        <select [(ngModel)]="sel" class="form-select categorySelect col-sm-4 " aria-label="Default select example">
+            <option class="categorySelect" [value]="0" disabled selected>search by category</option>
+            <option class="categorySelect" value="">all</option>
+            <option *ngFor="let product of categories" class="categorySelect" value="{{product.category}}">
+                {{product.category}}</option>
+        </select>
+    </div>
+
+    <div class="products-categories">
+        <app-admin-product-item *ngFor="let product of products | LockFilter: searchTerm | selectFilterPipe:sel"
+            [product]="product">
+        </app-admin-product-item>
+    </div>
+</div>

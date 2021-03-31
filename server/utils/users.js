@@ -32,9 +32,9 @@ async function checkPassword(password, userPassword) {
     }
 }
 
-async function getToken({ email, id, role, firstName, lastName }) {
+async function getToken({ email, _id, id, role, firstName, lastName, city, street }) {
     const { SECRET } = process.env
-    const token = jwt.sign({ email, id, role, firstName, lastName }, SECRET, { expiresIn: "1h" })
+    const token = jwt.sign({ email, _id, id, role, firstName, lastName, city, street }, SECRET, { expiresIn: "1h" })
     return token
 }
 

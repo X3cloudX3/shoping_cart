@@ -21,7 +21,7 @@ export class SignUpPartTwoComponent implements OnInit {
       lastNameError: "",
       cityError: "",
       streetError: ""
-    }
+    } 
     this.successMessage = ""
     this.nextButtonError = true
     this.registerStepTwo = this.fb.group({
@@ -43,7 +43,6 @@ export class SignUpPartTwoComponent implements OnInit {
   } 
   signUp() {
     this.userService.signUp().subscribe((res) => {
-      console.log(res);
       this.successMessage = res.message
       setTimeout(() => {
         this.registerSuccessfully.emit()

@@ -2,26 +2,27 @@ const express = require("express")
 const router = express.Router();
 const jwt = require("jsonwebtoken")
 const { handleRegister, handleLogin, isUserExist } = require('../database/controllers/userController')
-
+const { getUser, } = require('../utils/users')
+const moment = require('moment')
 
 
 router.post("/register", async (req, res, next) => {
     try {
-        const { email, password } = req.body
-        const user = await isUserExist(email, password);
-        if (user) return res.json({ message: "user already exists" })
         const result = await handleRegister(req.body)
         res.json({ result, message: "user has registerd successfully" })
     }
     catch (err) {
-        res.json(err.message)
+        const { message } = err
+        console.log(err);
+        res.json({ message: message })
+        throw new Error(message)
+
     }
 })
 
 
 router.post("/login", async (req, res, next) => {
     try {
-
         const { email, password } = req.body
         const user = await isUserExist(email, password);
         if (!user) return res.status(401).send("ERROR LOGIN");
@@ -40,7 +41,7 @@ router.post("/login", async (req, res, next) => {
 router.get('/getUserDetails', (req, res, next) => {
     const { autorization } = req.headers
     if (!autorization) {
-        res.json({ status: false })
+        res.json({ status: false, message: `sorry ${req.headers} you need to login` })
     }
     else {
         jwt.verify(autorization, process.env.SECRET, (err, decoded) => {
@@ -48,30 +49,15 @@ router.get('/getUserDetails', (req, res, next) => {
                 return res.json({ status: false })
             }
             else {
-                const { id, role, firstName, lastName } = decoded
-
-                res.json({ id, role, fullName: `${firstName} ${lastName}` })
+                const minDate = moment().add(1, 'd').format("YYYY-MM-DD");
+                const { id, role, firstName, lastName, city, street } = decoded
+                res.json({ id, role, fullName: `${firstName} ${lastName}`, city, street, minDate })
             }
         })
     }
 })
 
-// router.get("/verify", async (req, res, next) => {
-//     try {
-//         setTimeout(() => {
-//             const { authorization } = req.heade
-//             jwt.verify(authorization, process.env.SECRET, (err, decoded) => {
-//                 if (err) return res.json({ status: false })
-//                 if (decoded.user_type === "admin") { return res.json({ status: true, admin: true, userId: decoded.id }) } else {
-//                     return res.json({ status: true, admin: false, userId: decoded.id })
-//                 }
-//             })
-//         }, 2000);
-//     } catch (ex) {
-//         return res.json({ status: false })
-//     }
 
-// })
 
 module.exports = router;
 

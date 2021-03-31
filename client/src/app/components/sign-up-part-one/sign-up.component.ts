@@ -13,7 +13,7 @@ export class SignUpComponent implements OnInit {
   public errors: any
   public nextButtonError: any
   public userPartOneDetails: any
-  // @Input() handlePage: any 
+  // @Input() handlePage: any  
   @Output() handlePages = new EventEmitter()
   constructor(public userService: UserService, public router: Router, public fb: FormBuilder) {
     this.errors = {
@@ -47,13 +47,15 @@ export class SignUpComponent implements OnInit {
       })
     }
   }
-
+  
   handleErrors(details) {
     const { email, password, confirmPassword, id } = details
     this.resetErrors()
     if (!id) return this.errors.idError = "ID is required."
     if (!email) return this.errors.emailError = "Email is required."
+    if (!email.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)) return this.errors.emailError = "Email is not valid."
     if (!password) return this.errors.passwordError = "Password is required."
+    if (!password.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/)) return this.errors.passwordError = "password is too weak ."
     if (!confirmPassword) return this.errors.confirmPasswordError = "Confirm Password is required."
     if (password !== confirmPassword) return this.errors.confirmPasswordError = "Passwords not match."
     return false

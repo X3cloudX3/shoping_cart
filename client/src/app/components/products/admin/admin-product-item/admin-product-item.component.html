@@ -1,0 +1,21 @@
+<div>
+    <div id={{product._id}} class="flip-card">
+        <div class="flip-card-inner">
+            <div class="flip-card-front">
+                <img src={{product.imageURL}} alt="">
+            </div>
+            <div class="flip-card-back">
+                <div class="back-header">
+                    <img src={{product.imageURL}} alt="">
+                </div>
+                <div class="back-footer">
+                    <h5>{{product.name}}</h5>
+                    <h6>{{product.category}}</h6>
+                    <h6>{{product.price}}₪</h6>
+                    <ngbd-modal-basic (getUpdateStatusChange)="onChanged($event)" [product]="product">
+                    </ngbd-modal-basic>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

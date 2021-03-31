@@ -62,7 +62,7 @@ export class UserService {
     const { id, email } = this.userPartOneDetails
     return this.http.post(`${baseURL}/users/checkIfExists`, { id, email })
   }
-
+ 
   setName(name) {
     this.name = name
   }

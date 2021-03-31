@@ -1,0 +1,38 @@
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">edit product</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="checkoutForm">
+            <div class="md-form">
+                <label for="form1" class="">imageURL</label>
+                <input mdbInput value="{{product.imageURL}}" name="imageURL" type="text" formControlName="imageURL"
+                    id="form1" class="form-control">
+                <span>{{errors.imageError}}</span><br>
+                <label for="form1" class="">name</label>
+                <input mdbInput value="{{product.name}}" type="text" formControlName="name" id="form2"
+                    class="form-control">
+                <span>{{errors.nameError}}</span><br>
+                <label for="form1" class="">category</label>
+                <input mdbInput value="{{product.category}}" type="text" formControlName="category" id="form3"
+                    class="form-control">
+                <span>{{errors.categoryError}}</span><br>
+                <label for="form1" class="">price in ils</label>
+                <input mdbInput value="{{product.price}}" type="number" formControlName="price" id="form4"
+                    class="form-control">
+                <span>{{errors.priceError}}</span><br>
+            </div>
+            <button type="button" class="btn btn-block btn-outline-dark"
+                (click)=" onSubmit(checkoutForm.value)">Save</button>
+        </form>
+    </div>
+</ng-template>
+
+<button class="btn btn-lg btn-outline-primary" (click)="open(content)">edit product</button>
+
+<hr>
+
+<pre>{{ closeResult }}</pre>

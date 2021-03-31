@@ -13,10 +13,19 @@ import { SignUpPartTwoComponent } from './components/sign-up-part-two/sign-up-pa
 import { HomeComponent } from './components/home/home.component';
 import { ProductItemComponent } from './components/products/product-item/product-item.component';
 import { ProductsListComponent } from './components/products/products-list/products-list.component';
+import { AdminProductItemComponent } from './components/products/admin/admin-product-item/admin-product-item.component';
+import { AdminProductsListComponent } from './components/products/admin/admin-products-list/admin-products-list.component';
 import { MatIconModule } from '@angular/material/icon'
 import { MatButtonModule } from '@angular/material/button';
-import {MatBadgeModule} from '@angular/material/badge';
-
+import { MatBadgeModule } from '@angular/material/badge';
+import { EditModalComponent } from './components/products/admin/edit-modal/edit-modal.component';
+import { AddModalComponent } from './components/products/admin/add-modal/add-modal.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CheckoutComponent } from './components/paymentCheckout/checkout/checkout.component';
+import { HighlightSearchPipe } from './pipes/highlightSearchPipe/search-in-cart.pipe';
+import { InvoiceComponent } from './components/paymentCheckout/invoice/invoice.component';
+import { SearchFilterPipe } from './pipes/filterPipe/search-filter.pipe';
+import { SelectFilterPipePipe } from './pipes/selectPipe/select-filter-pipe.pipe';
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,8 +36,15 @@ import {MatBadgeModule} from '@angular/material/badge';
     HomeComponent,
     ProductsListComponent,
     ProductItemComponent,
-
-
+    AdminProductItemComponent,
+    AdminProductsListComponent,
+    EditModalComponent,
+    AddModalComponent,
+    CheckoutComponent,
+    HighlightSearchPipe,
+    InvoiceComponent,
+    SearchFilterPipe,
+    SelectFilterPipePipe,
   ],
   imports: [
     BrowserModule,
@@ -39,7 +55,10 @@ import {MatBadgeModule} from '@angular/material/badge';
     NgbModule,
     MatIconModule,
     MatButtonModule,
-    MatBadgeModule
+    MatBadgeModule,
+    BrowserAnimationsModule,
+
+
   ],
   providers: [{ useClass: CustomInterceptorService, provide: HTTP_INTERCEPTORS, multi: true }],
   bootstrap: [AppComponent]
